@@ -251,8 +251,8 @@ export interface IOperations {
   isRunning(operation: Operation): boolean;
 }
 
-export interface Command {
+export interface ISvnCommand {
   name: string;
   needsRepository?: boolean;
-  run(...args: unknown[]): void;
+  run(...args: Array<unknown>): void;
 }

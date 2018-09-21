@@ -1,9 +1,9 @@
-import { Command } from "../common/types";
-import { Model } from "../model";
 import { commands } from "vscode";
+import { ISvnCommand } from "../common/types";
+import { Model } from "../model";
 import { OpenFile } from "./openFile";
 
-const svnCommands: Command[] = [new OpenFile()];
+const svnCommands: ISvnCommand[] = [new OpenFile()];
 
 export class CommandRegister {
   constructor(private model: Model) {}

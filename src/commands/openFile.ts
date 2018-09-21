@@ -1,18 +1,18 @@
-import { Command } from "../common/types";
+import * as fs from "fs";
 import {
-  Uri,
   SourceControlResourceState,
-  window,
-  workspace,
   TextDocumentShowOptions,
-  ViewColumn
+  Uri,
+  ViewColumn,
+  window,
+  workspace
 } from "vscode";
+import { ISvnCommand } from "../common/types";
 import { Resource } from "../resource";
 import IncommingChangeNode from "../treeView/nodes/incomingChangeNode";
-import * as fs from "fs";
 import { fromSvnUri } from "../uri";
 
-export class OpenFile implements Command {
+export class OpenFile implements ISvnCommand {
   public name = "svn.openFile";
 
   public async run(
@@ -40,7 +40,7 @@ export class OpenFile implements Command {
 
       uris = [resource.resourceUri];
     } else {
-      let resource = arg;
+      const resource = arg;
 
       if (resource) {
         uris = [
