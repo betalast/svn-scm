@@ -20,6 +20,7 @@ import {
   hasSupportToRegisterDiffCommand,
   toDisposable
 } from "./util";
+import { CommandRegister } from "./commands/commandRegister";
 
 async function init(
   context: ExtensionContext,
@@ -36,6 +37,8 @@ async function init(
   const model = new Model(svn);
   const contentProvider = new SvnContentProvider(model);
   const svnCommands = new SvnCommands(model);
+  const testCommands = new CommandRegister(model);
+  testCommands.register();
   disposables.push(model, contentProvider, svnCommands);
 
   const svnProvider = new SvnProvider(model);

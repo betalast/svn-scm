@@ -250,3 +250,9 @@ export interface IOperations {
   isIdle(): boolean;
   isRunning(operation: Operation): boolean;
 }
+
+export interface Command {
+  name: string;
+  needsRepository?: boolean;
+  run(...args: unknown[]): void;
+}
