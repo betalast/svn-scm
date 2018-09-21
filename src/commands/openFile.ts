@@ -7,16 +7,19 @@ import {
   window,
   workspace
 } from "vscode";
-import { ISvnCommand } from "../common/types";
+import { Model } from "../model";
 import { Resource } from "../resource";
-import IncommingChangeNode from "../treeView/nodes/incomingChangeNode";
+import IncomingChangeNode from "../treeView/nodes/incomingChangeNode";
 import { fromSvnUri } from "../uri";
+import { Command } from "./command";
 
-export class OpenFile implements ISvnCommand {
-  public name = "svn.openFile";
+export class OpenFile extends Command {
+  constructor(model: Model) {
+    super("svn.openFile");
+  }
 
-  public async run(
-    arg?: Resource | Uri | IncommingChangeNode,
+  public async execute(
+    arg?: Resource | Uri | IncomingChangeNode,
     ...resourceStates: SourceControlResourceState[]
   ) {
     const preserveFocus = arg instanceof Resource;
@@ -29,7 +32,7 @@ export class OpenFile implements ISvnCommand {
       } else if (arg.scheme === "file") {
         uris = [arg];
       }
-    } else if (arg instanceof IncommingChangeNode) {
+    } else if (arg instanceof IncomingChangeNode) {
       const resource = new Resource(
         arg.uri,
         arg.type,
@@ -41,6 +44,12 @@ export class OpenFile implements ISvnCommand {
       uris = [resource.resourceUri];
     } else {
       const resource = arg;
+
+      if (!(resource instanceof Resource)) {
+        // can happen when called from a keybinding
+        // TODO(@JohnstonCode) fix this
+        // resource = this.getSCMResource();
+      }
 
       if (resource) {
         uris = [

@@ -250,9 +250,3 @@ export interface IOperations {
   isIdle(): boolean;
   isRunning(operation: Operation): boolean;
 }
-
-export interface ISvnCommand {
-  name: string;
-  needsRepository?: boolean;
-  run(...args: Array<unknown>): void;
-}

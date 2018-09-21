@@ -4,11 +4,9 @@ import {
   ExtensionContext,
   OutputChannel,
   Uri,
-  window,
-  workspace
+  window
 } from "vscode";
-import { SvnCommands } from "./commands";
-import { CommandRegister } from "./commands/commandRegister";
+import { registerCommands } from "./commands";
 import SvnDecorations from "./decorations/svnDecorations";
 import { configuration } from "./helpers/configuration";
 import { Model } from "./model";
@@ -36,10 +34,10 @@ async function init(
   const svn = new Svn({ svnPath: info.path, version: info.version });
   const model = new Model(svn);
   const contentProvider = new SvnContentProvider(model);
-  const svnCommands = new SvnCommands(model);
-  const testCommands = new CommandRegister(model);
-  testCommands.register();
-  disposables.push(model, contentProvider, svnCommands);
+
+  registerCommands(model);
+
+  disposables.push(model, contentProvider);
 
   const svnProvider = new SvnProvider(model);
 
