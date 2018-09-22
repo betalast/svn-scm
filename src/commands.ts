@@ -1,7 +1,9 @@
+import { FileOpen } from "./commands/fileOpen";
 import { OpenFile } from "./commands/openFile";
 import { Model } from "./model";
 
 export function registerCommands(model: Model) {
+  new FileOpen(); // tslint:disable-line
   new OpenFile(model); // tslint:disable-line
 }
 
@@ -122,11 +124,6 @@ export function registerCommands(model: Model) {
 //   public getModel() {
 //     return this.model;
 //   }
-
-//   // @command("svn.fileOpen")
-//   // public async fileOpen(resourceUri: Uri) {
-//   //   await commands.executeCommand("vscode.open", resourceUri);
-//   // }
 
 //   @command("svn.promptAuth", { repository: true })
 //   public async promptAuth(repository: Repository): Promise<boolean> {
